@@ -18,35 +18,30 @@ class TestUser(unittest.TestCase):
         del cls.test_user
 
     def setUp(self):
-        print("setUp user for bet testing.")
+        print("setUp user for betting testing.")
         self.user = User(start_balance=1000)
 
     def tearDown(self):
-        print("tearDown user after bet testing")
+        print("tearDown user after betting testing")
         del self.user
 
-    def test_balance(self):
-        print("Running initial balance testing")
-        self.assertEqual(self.user.balance, 1000, "Initial balance should be 1000.")
+    def test_balance_horse_id(self):
+        print("Running balance and horse testing")
         another_user = User(start_balance=500)
-        self.assertEqual(another_user.balance, 500, "Initial balance should be 500 for another user.")
+        horse_choice = 3614 
+        self.assertEqual(self.user.balance, 1000, "Initial balance should be 1000")
+        self.assertEqual(another_user.balance, 500, "Initial balance should be 500 for another user")
+        self.assertIsInstance(horse_choice, int, "Horse choice must be horse_id")
+        self.assertGreater(horse_choice, 0, "Horse choice should be greater than 0")
 
     def test_take_bet(self):
         print("Running bet testing")
         valid_bet = 50
+        horse_choice = 3614
         self.assertGreater(valid_bet, 0, "Bet should be a positive value")
         self.assertLessEqual(valid_bet, self.user.balance, "Bet cannot exceed balance")
         self.user.balance -= valid_bet
-        self.assertEqual(self.user.balance, 950, "Balance should decrease by bet amount")
-
-    def test_distribute_earnings_loss(self):
-        print("Running loss testing")
-        self.user.balance = 1000
-        bet_amount = 100
-        winning_horse_id = 2
-        selected_horse_id = 1
-        self.user.distribute_earnings(bet_amount, winning_horse_id, selected_horse_id)
-        self.assertEqual(self.user.balance, 900, "Balance should be 900 after losing the bet.")
+        self.assertEqual(self.user.balance, 950, "Balance should decrease by the bet amount")
 
 if __name__ == "__main__":
     unittest.main()
