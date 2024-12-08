@@ -38,10 +38,13 @@ class TestUser(unittest.TestCase):
         print("Running bet testing")
         valid_bet = 50
         horse_choice = 3614
+        valid_horses = [3614, 3615, 3917]  
         self.assertGreater(valid_bet, 0, "Bet should be a positive value")
         self.assertLessEqual(valid_bet, self.user.balance, "Bet cannot exceed balance")
         self.user.balance -= valid_bet
         self.assertEqual(self.user.balance, 950, "Balance should decrease by the bet amount")
+        self.assertIn(horse_choice, valid_horses, "Chosen horse not a valid horse")
+
 
 if __name__ == "__main__":
     unittest.main()
